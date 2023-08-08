@@ -25,7 +25,7 @@ const ContactForm = ({ addContact }) => {
   return (
     <LabelForm onSubmit={handleSubmit}>
       <div>
-        <Label htmlFor="name">Ім'я</Label>
+        <Label htmlFor="name">Name</Label>
         <InputField
           type="text"
           id="name"
@@ -38,7 +38,7 @@ const ContactForm = ({ addContact }) => {
         />
       </div>
       <div>
-        <Label htmlFor="number">Номер телефону</Label>
+        <Label htmlFor="number">Number</Label>
         <InputField
           type="tel"
           id="number"
@@ -50,7 +50,7 @@ const ContactForm = ({ addContact }) => {
           onChange={handleChange}
         />
       </div>
-      <SubmitButton type="submit">Додати контакт</SubmitButton>
+      <SubmitButton type="submit">Add contact</SubmitButton>
     </LabelForm>
   );
 };
