@@ -1,14 +1,32 @@
 import React, { useState } from 'react';
 import { LabelForm, Label, InputField, SubmitButton } from './ContactForm.styled';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact, selectContacts } from '../../redux/contactsSlice';
+import { nanoid } from 'nanoid';
 
-const ContactForm = ({ addContact }) => {
+const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const dispatch = useDispatch();
+  const contacts = useSelector(selectContacts);
 
   const handleSubmit = e => {
     e.preventDefault();
-    addContact(name, number);
+    if (name.trim() === '' || number.trim() === '') {
+      alert('Please provide both name and number.');
+      return;
+    }
+
+    const existingContact = contacts.find(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
+
+    if (existingContact) {
+      alert(`${existingContact.name} already added to contact list`);
+      return;
+    }
+
+    dispatch(addContact({ id: nanoid(), name: name, number: number }));
     setName('');
     setNumber('');
   };
@@ -53,10 +71,6 @@ const ContactForm = ({ addContact }) => {
       <SubmitButton type="submit">Add contact</SubmitButton>
     </LabelForm>
   );
-};
-
-ContactForm.propTypes = {
-  addContact: PropTypes.func.isRequired,
 };
 
 export default ContactForm;
